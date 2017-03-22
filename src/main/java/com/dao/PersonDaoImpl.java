@@ -6,9 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.model.Person;
 
+@Repository
 public class PersonDaoImpl implements PersonDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PersonDaoImpl.class);
