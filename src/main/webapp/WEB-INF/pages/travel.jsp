@@ -14,19 +14,25 @@
 
 <body>
 
+
 <c:if test="${!empty travelList}">
 	<table class="table table-striped table-bordered">
 			<thead>
 	      <tr>
-	        <th>#</th>
 	        <th>Bölümü</th>
 	        <th>Müdürü</th>
 	        <th>Seyehat Başlangıcı</th>
 	        <th>Seyehat Sonu</th>
 	        <th>Seyehat Yeri</th>
 	        <th>Gidiş Amacı</th>
+	        <th>Seyehat Miktarı</th>
 	        <th>Proje Kodu</th>
-	        <th>İşlemler</th>
+	        <th>İşlemler   <span style="display:inline-block; width:10;"></span>
+	          <a href="<c:url value='/travels/add/' />">
+	  				<button type="button" class="btn btn-success">
+	    				<span class="glyphicon glyphicon-plus"></span> Add
+	  				</button>
+  				</a></th>
 	      </tr>
 	    </thead>
 	<c:forEach items="${travelList}" var="travel">
@@ -42,12 +48,11 @@
 			<td><button type="button" class="btn btn-danger">
     				<span class="glyphicon glyphicon-minus"></span> Delete
   				</button>
+  				<a href="<c:url value='/editTravel/${travel.id}' />">
   				<button type="button" class="btn btn-warning">
     				<span class="glyphicon glyphicon-pencil"></span> Modify
   				</button>
-  				<button type="button" class="btn btn-success">
-    				<span class="glyphicon glyphicon-plus"></span> Add
-  				</button>
+  				</a>
   			</td>
 		</tr>
 	</c:forEach>
