@@ -41,7 +41,7 @@ public class TravelDaoImpl implements TravelDao {
 	public List<Travel> listTravels() {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		List<Travel> personsList = session.createQuery("from travel").list();
+		List<Travel> personsList = session.createQuery("from Travel").list();
 		for(Travel t : personsList){
 			logger.info("Travel List::"+t);
 		}

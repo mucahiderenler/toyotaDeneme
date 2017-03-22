@@ -40,6 +40,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.model.Person</value>
+				<value>com.model.Travel</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -58,8 +59,15 @@
 	<bean id="personService" class="com.service.PersonServiceImpl">
 		<property name="personDAO" ref="personDAO"></property>
 	</bean>
-	<context:component-scan base-package="com.controller" />
 	
+	<bean id="travelDao" class="com.dao.TravelDaoImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="travelService" class="com.service.TravelServiceImpl">
+		<property name="travelDao" ref="travelDao"></property>
+	</bean>
+		
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

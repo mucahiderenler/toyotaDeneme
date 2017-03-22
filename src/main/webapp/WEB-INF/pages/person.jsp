@@ -42,9 +42,10 @@
 		</tr>
 	</c:forEach>
 	</table>
-	
-	
-	<table class="table table-striped table-bordered">
+</c:if>
+
+
+<table class="table table-striped table-bordered">
 			<thead>
 	      <tr>
 	        <th>#</th>
@@ -78,6 +79,7 @@
 	      </tr>
 	    </tbody>
 	  </table>
-</c:if>
+
+
 </body>
 </html>
