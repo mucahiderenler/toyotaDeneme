@@ -45,10 +45,13 @@
 			<td>${travel.gidisAmac}</td>
 			<td>${travel.seyehatMik}</td>
 			<td>${travel.projeKod}</td>
-			<td><button type="button" class="btn btn-danger">
+			<td>
+			<a href="<c:url value='/travels/remove/${travel.id}' />">
+			<button type="button" class="btn btn-danger">
     				<span class="glyphicon glyphicon-minus"></span> Delete
   				</button>
-  				<a href="<c:url value='/editTravel/${travel.id}' />">
+  			</a>
+  				<a href="<c:url value='/travels/add/${travel.id}' />">
   				<button type="button" class="btn btn-warning">
     				<span class="glyphicon glyphicon-pencil"></span> Modify
   				</button>
