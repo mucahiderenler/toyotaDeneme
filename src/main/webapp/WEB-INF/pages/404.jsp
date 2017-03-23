@@ -59,7 +59,6 @@ body{
 	<div class="logo">
 			<p>OOPS 404! - Could not Find it</p>
 			<div class="sub">
-			  <p><a href="user">Back </a></p>
 			</div>
 	</div>
  </div>	
