@@ -31,9 +31,13 @@ public class TravelController {
 	
 	@RequestMapping(value= "/travels/add/{id}", method = RequestMethod.GET)
 	public String addTravel(@PathVariable("id") int ID,Model model){
-		
-		model.addAttribute("travel", this.travelService.getTravelById(ID));
-        //model.addAttribute("listPersons", this.travelService.listTravels());
+		if(ID == 0){
+			model.addAttribute("travel", new Travel());
+		}
+		else{
+			model.addAttribute("travel", this.travelService.getTravelById(ID));
+	        //model.addAttribute("listTravels", this.travelService.listTravels());
+		}
 		return "addTravel";
 	}
 	

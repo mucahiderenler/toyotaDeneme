@@ -237,11 +237,11 @@
 	</c:if>
 	<tr>
 		<td colspan="2">
-			<c:if test="${!empty travel.id}">
+			<c:if test="${travel.id != 0}">
 				<input type="submit"
 					value="<spring:message text="Edit Travel"/>" />
 			</c:if>
-			<c:if test="${empty travel.id}">
+			<c:if test="${travel.id == 0}">
 				<input type="submit"
 					value="<spring:message text="Add Travel"/>" />
 			</c:if>

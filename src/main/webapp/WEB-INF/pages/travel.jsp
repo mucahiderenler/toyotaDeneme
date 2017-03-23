@@ -28,7 +28,7 @@
 	        <th>Seyehat Miktarı</th>
 	        <th>Proje Kodu</th>
 	        <th>İşlemler   <span style="display:inline-block; width:10;"></span>
-	          <a href="<c:url value='/travels/add/' />">
+	          <a href="<c:url value='/travels/add/0' />">
 	  				<button type="button" class="btn btn-success">
 	    				<span class="glyphicon glyphicon-plus"></span> Add
 	  				</button>
