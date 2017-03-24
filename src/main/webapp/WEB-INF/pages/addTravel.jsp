@@ -53,16 +53,16 @@
 			<br> 
 		</td>
 		</tr>
-		<tr>
+		
+	<tr>
 		<td>
-			<form:label path="username">
-				<spring:message text="İsim"/>
+			<form:label path="userId">
+				<spring:message text="User ID"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="username"/>
-			
-		</td> 
+			<form:input path="userId" />
+		</td>
 	</tr>
 	<tr>
 		<td>

@@ -19,8 +19,6 @@
 	<table class="table table-striped table-bordered">
 			<thead>
 	      <tr>
-	        <!--<th>Bölümü</th>-->
-	        <th>Müdürü</th>
 	        <th>Seyehat Eden</th>
 	        <th>Seyehat Başlangıcı</th>
 	        <th>Seyehat Sonu</th>
@@ -38,9 +36,9 @@
 	    </thead>
 	<c:forEach items="${travelList}" var="travel">
 		<tr>
-			<!-- <td>{travel.bolum}</td>-->
-			<td>${travel.user.isEmpty()}</td>
-			<td>${travel.username}</td>
+		<c:forEach items="${userList}" var="user">
+		<c:if test="${user.id == travel.userId }">
+			<td>${user.username}</td>
 			<td>${travel.seyehatBas}</td>
 			<td>${travel.seyehatSon}</td>
 			<td>${travel.seyehatYeri}</td>
@@ -59,6 +57,8 @@
   				</button>
   				</a>
   			</td>
+  			</c:if>
+  			</c:forEach>
 		</tr>
 	</c:forEach>
 	</table>

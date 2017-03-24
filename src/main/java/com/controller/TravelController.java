@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dao.UserDao;
 import com.model.Travel;
+import com.model.User;
 import com.service.TravelService;
 
 @Controller
@@ -22,10 +24,15 @@ public class TravelController {
 		this.travelService = ts;
 	}
 	
+	@Autowired
+	private UserDao userDao;
+	
 	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
 	public String getTravels(Model model){
 		model.addAttribute("travel", new Travel());
+		model.addAttribute("user", new User());
+		model.addAttribute("userList", this.userDao.listUsers());
 		model.addAttribute("travelList",this.travelService.listTravels());
 		return "travel";
 	}
@@ -43,7 +50,7 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
-	public String updateTravel(@ModelAttribute("travel") Travel t){
+	public String updateTravel(@ModelAttribute("travel") Travel t, @ModelAttribute("user") User u){
 		
 		if(t.getId() == 0){
 			//new travel, add it

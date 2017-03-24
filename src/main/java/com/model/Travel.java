@@ -20,7 +20,7 @@ public class Travel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int ID;
 	
-	private String username;
+	private int userId;
 	private String seyehatBas;
 	private String seyehatSon;
 	private String seyehatYeri;
@@ -28,14 +28,14 @@ public class Travel {
 	private String seyehatMik;
 	private String projeKod;
 	
-	@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<User> user;
+	/*@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<User> user;*/
 	
 	public Travel(){}
 	
-	public Travel(String username, String seyehatBas, String seyehatSon,
+	public Travel(int userId, String seyehatBas, String seyehatSon,
 					String seyehatYeri, String gidisAmac, String seyehatMik, String projeKod){
-		this.username = username;
+		this.userId = userId;
 		this.seyehatBas = seyehatBas;
 		this.seyehatSon = seyehatSon;
 		this.seyehatYeri = seyehatYeri;
@@ -44,13 +44,13 @@ public class Travel {
 		this.projeKod = projeKod;
 	}
 	
-	public Set<User> getUser(){
+	/*public Set<User> getUser(){
 		return this.user;
 	}
 	
 	public void getUser(Set<User> user){
 		this.user = user;
-	}
+	}*/
 	
 	public int getId() {
 		return ID;
@@ -60,12 +60,12 @@ public class Travel {
 		this.ID = ID;
 	}
 	
-	public String getUsername(){
-		return this.username;
+	public int getUserId(){
+		return this.userId;
 	}
 	
-	public void setUsername(String username){
-		this.username = username;
+	public void setUsername(int userId){
+		this.userId = userId;
 	}
 	
 	public String getSeyehatBas(){

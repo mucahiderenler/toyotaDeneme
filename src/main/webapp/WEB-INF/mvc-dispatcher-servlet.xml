@@ -59,6 +59,10 @@
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 	
+	<bean id="userDao" class="com.dao.UserDaoImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
 	<bean id="travelService" class="com.service.TravelServiceImpl">
 		<property name="travelDao" ref="travelDao"></property>
 	</bean>
