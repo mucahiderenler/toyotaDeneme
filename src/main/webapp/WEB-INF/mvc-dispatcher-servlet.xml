@@ -39,25 +39,20 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<value>com.model.Person</value>
 				<value>com.model.Travel</value>
+				<value>com.model.User</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
-				</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.connection.CharSet">utf8</prop>
+				<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">utf8</prop>
+				<prop key="hbm2ddl.auto">update</prop>
 			</props>
 		</property>
-	</bean>
- 
- 
- <bean id="personDAO" class="com.dao.PersonDaoImpl">
-		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</bean>
-	<bean id="personService" class="com.service.PersonServiceImpl">
-		<property name="personDAO" ref="personDAO"></property>
 	</bean>
 	
 	<bean id="travelDao" class="com.dao.TravelDaoImpl">

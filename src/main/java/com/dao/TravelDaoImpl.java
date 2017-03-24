@@ -11,7 +11,7 @@ import com.model.Travel;
 
 public class TravelDaoImpl implements TravelDao {
 	
-	private static final Logger logger = LoggerFactory.getLogger(PersonDaoImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(TravelDaoImpl.class);
 
 	private SessionFactory sessionFactory;
 	
@@ -25,7 +25,7 @@ public class TravelDaoImpl implements TravelDao {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(t);
-		logger.info("Person saved successfully, Person Details="+t);
+		logger.info("Travel saved successfully, Travel Details="+t);
 		
 	}
 
@@ -34,7 +34,7 @@ public class TravelDaoImpl implements TravelDao {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(t);
-		logger.info("Person updated successfully, Person Details="+t);
+		logger.info("Travel updated successfully, Travel Details="+t);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -53,7 +53,7 @@ public class TravelDaoImpl implements TravelDao {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();		
 		Travel t = (Travel) session.load(Travel.class, new Integer(id));
-		logger.info("Person loaded successfully, Person details="+t);
+		logger.info("Travel loaded successfully, Travel details="+t);
 		return t;
 	}
 
@@ -65,7 +65,7 @@ public class TravelDaoImpl implements TravelDao {
 		if(null != t){
 			session.delete(t);
 		}
-		logger.info("Person deleted successfully, person details="+t);
+		logger.info("Travel deleted successfully, Travel details="+t);
 		
 	}
 

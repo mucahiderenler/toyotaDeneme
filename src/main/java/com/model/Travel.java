@@ -1,29 +1,56 @@
 package com.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="travel")
+@Table(name="travels")
 public class Travel {
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int ID;
 	
-	private String bolum;
-	private String isim;
-	private String mudur;
+	private String username;
 	private String seyehatBas;
 	private String seyehatSon;
 	private String seyehatYeri;
 	private String gidisAmac;
 	private String seyehatMik;
 	private String projeKod;
+	
+	@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<User> user;
+	
+	public Travel(){}
+	
+	public Travel(String username, String seyehatBas, String seyehatSon,
+					String seyehatYeri, String gidisAmac, String seyehatMik, String projeKod){
+		this.username = username;
+		this.seyehatBas = seyehatBas;
+		this.seyehatSon = seyehatSon;
+		this.seyehatYeri = seyehatYeri;
+		this.gidisAmac = gidisAmac;
+		this.seyehatMik = seyehatMik;
+		this.projeKod = projeKod;
+	}
+	
+	public Set<User> getUser(){
+		return this.user;
+	}
+	
+	public void getUser(Set<User> user){
+		this.user = user;
+	}
 	
 	public int getId() {
 		return ID;
@@ -33,28 +60,12 @@ public class Travel {
 		this.ID = ID;
 	}
 	
-	public String getBolum(){
-		return this.bolum;
+	public String getUsername(){
+		return this.username;
 	}
 	
-	public void setBolum(String bolum){
-		this.bolum = bolum;
-	}
-	
-	public String getMudur(){
-		return this.mudur;
-	}
-	
-	public void setMudur(String mudur){
-		this.mudur = mudur;
-	}
-	
-	public String getIsim(){
-		return this.isim;
-	}
-	
-	public void setIsim(String isim){
-		this.isim = isim;
+	public void setUsername(String username){
+		this.username = username;
 	}
 	
 	public String getSeyehatBas(){

@@ -19,8 +19,9 @@
 	<table class="table table-striped table-bordered">
 			<thead>
 	      <tr>
-	        <th>Bölümü</th>
+	        <!--<th>Bölümü</th>-->
 	        <th>Müdürü</th>
+	        <th>Seyehat Eden</th>
 	        <th>Seyehat Başlangıcı</th>
 	        <th>Seyehat Sonu</th>
 	        <th>Seyehat Yeri</th>
@@ -37,8 +38,9 @@
 	    </thead>
 	<c:forEach items="${travelList}" var="travel">
 		<tr>
-			<td>${travel.bolum}</td>
-			<td>${travel.mudur}</td>
+			<!-- <td>{travel.bolum}</td>-->
+			<td>${travel.user.isEmpty()}</td>
+			<td>${travel.username}</td>
 			<td>${travel.seyehatBas}</td>
 			<td>${travel.seyehatSon}</td>
 			<td>${travel.seyehatYeri}</td>

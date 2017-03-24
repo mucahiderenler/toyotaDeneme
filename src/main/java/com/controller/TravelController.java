@@ -22,6 +22,7 @@ public class TravelController {
 		this.travelService = ts;
 	}
 	
+	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
 	public String getTravels(Model model){
 		model.addAttribute("travel", new Travel());
