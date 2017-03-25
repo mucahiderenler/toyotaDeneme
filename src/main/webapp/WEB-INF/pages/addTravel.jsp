@@ -52,7 +52,7 @@
 			<form:hidden path="id" />
 			<br> 
 		</td>
-		</tr>
+	</tr>
 		
 	<tr>
 		<td>

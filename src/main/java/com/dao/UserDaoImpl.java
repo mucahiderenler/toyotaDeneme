@@ -48,12 +48,12 @@ public class UserDaoImpl implements UserDao {
 		}
 		return listUsers;
 	}
-
+	@Transactional
 	@Override
-	public User getUserById(int id) {
+	public User getUserByName(String name) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		User u = (User) session.load(User.class, new Integer(id));
+		User u = (User) session.load(User.class, new String(name));
 		logger.info("User loaded, infos: " + u);
 		return u;
 	}

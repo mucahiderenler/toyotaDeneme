@@ -1,15 +1,10 @@
 package com.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -64,7 +59,7 @@ public class Travel {
 		return this.userId;
 	}
 	
-	public void setUsername(int userId){
+	public void setUserId(int userId){
 		this.userId = userId;
 	}
 	

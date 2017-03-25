@@ -1,12 +1,11 @@
 package com.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -14,14 +13,20 @@ import javax.persistence.Table;
 @Table(name="USERS")
 public class User {
 
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	/**
+	 * 
+	 */
+
+
+
 	private int id;
 	
+	@Id
+	@Column(name="username")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String username;
 	private String password;
-	private String auth;
+	private String authority;
 	private String seyehatBilgi;
 	
 	/*@ManyToOne
@@ -32,9 +37,9 @@ public class User {
 		
 	}
 	
-	public User(String username, String auth, String seyehatBilgi, int id){
+	public User(String username, String authority, String seyehatBilgi, int id){
 		this.id = id;
-		this.auth = auth;
+		this.authority = authority;
 		this.username = username;
 		this.seyehatBilgi = seyehatBilgi;
 	}
@@ -71,12 +76,12 @@ public class User {
 		this.password = password;
 	}
 	
-	public String getAuth() {
-		return this.auth;
+	public String getAuthority() {
+		return this.authority;
 	}
 
-	public void setAuth(String auth) {
-		this.auth = auth;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 	
 	public String getSeyehatBilgi() {

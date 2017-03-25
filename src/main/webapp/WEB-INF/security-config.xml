@@ -8,9 +8,10 @@
  <http auto-config="true">
   <access-denied-handler error-page="/403page" />
   <intercept-url pattern="/user**" access="ROLE_USER,ROLE_ADMIN" />
+  <intercept-url pattern="/travels/**" access="ROLE_USER,ROLE_ADMIN" />
   <intercept-url pattern="/admin**" access="ROLE_ADMIN" />
   <form-login login-page='/login' username-parameter="username"
-   password-parameter="password" default-target-url="/profile"
+   password-parameter="password" default-target-url="/travels"
    authentication-failure-url="/login?authfailed" />
   <logout logout-success-url="/login?logout" />
  </http>
@@ -22,8 +23,8 @@
  <authentication-manager>
   <authentication-provider>
    <jdbc-user-service data-source-ref="dataSource"
-    users-by-username-query="select username , password, enabled from user_details where username=?"
-    authorities-by-username-query="select username, authority from user_auth where username =?  " />
+    users-by-username-query="select username , password, enabled from users where username=?"
+    authorities-by-username-query="select username, authority from users where username =?  " />
   </authentication-provider>
  </authentication-manager>
 
