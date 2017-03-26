@@ -23,16 +23,6 @@ public class LoginController {
   return new ModelAndView("login", "message", message);
  }
 
- @RequestMapping("user")
- public String geUserPage() {
-  return "user";
- }
-
- @RequestMapping("admin")
- public String geAdminPage() {
-  return "admin";
- }
-
  @RequestMapping("403page")
  public String ge403denied() {
   return "403";

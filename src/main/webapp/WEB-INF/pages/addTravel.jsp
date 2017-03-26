@@ -2,7 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page pageEncoding="UTF-8"%>
-<%@ page session="false" %>
 <html>
 <head>
 	<title>Person Page</title>
@@ -28,19 +27,17 @@
             buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
             buttonImageOnly: true
   	     });    
-  	     $( ".datepicker" ).datepicker('option', 'dateFormat' , 'dd/mm/yy');
+  	     $( ".datepicker" ).datepicker('option', 'dateFormat' , 'mm/dd/yy');
   	  });
   </script>
 </head>
 <body>
 
 
-<h1>
-	Add a Travel
-</h1>
 
 <c:url var="addAction" value="/travels/add" ></c:url>
-
+<br>
+<form:errors path="travel"/>
 <form:form action="${addAction}" commandName="travel">
 <table>
 
@@ -76,9 +73,11 @@
 				<spring:message text="Seyehat Yeri"/>
 			</form:label>
 		</td>
+		
 		<td>
 			<form:input path="seyehatYeri" />
 		</td>
+		<td><form:errors path="seyehatYeri"/></td>
 	</tr>
 	
 	<tr>

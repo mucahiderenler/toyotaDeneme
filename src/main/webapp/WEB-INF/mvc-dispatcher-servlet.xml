@@ -15,12 +15,27 @@
 
 <bean id="dataSource"
   class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  
+  <property name="connectionProperties">
+    <props>
+        <prop key="useUnicode">true</prop>
+        <prop key="characterEncoding">utf8</prop>
+    </props>
+</property>
  
   <property name="driverClassName" value="com.mysql.jdbc.Driver" />
   <property name="url" value="jdbc:mysql://localhost:3306/com" />
   <property name="username" value="root" />
   <property name="password" value="mucahid1616" />
  </bean>
+  
+ <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+ 
+ <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location">
+			<value>/WEB-INF/spring-excel-views.xml</value>
+		</property>
+	</bean>
 
  <bean
   class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
 <%@page pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -197,7 +196,7 @@
 		<tr>
 		<c:forEach items="${userList}" var="user">
 		<c:forEach items="${bolumList}" var="bolum">
-		<c:if test="${user.id == travel.userId}">
+		<c:if test="${user.id == travel.userId && bolum.id == user.bolumId}">
 			<td>${bolum.bolumAdi}</td>
   			<td>${bolum.bolumMudur}</td>
 			<td>${user.username}</td>
@@ -252,6 +251,13 @@
 		</tr>
 	</c:forEach>
 	</table>
+	<c:if test="${ not empty userList }">
+	<a href="<c:url value='/travels/exportExcel'/>">
+	<button type="button" class="btn btn-info">
+		<span class="glyphicon glyphicon-download"></span>Export to Excel
+		</button>
+	</a>
+	</c:if>
 </c:if>
 
 

@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name="travels")
@@ -14,13 +16,18 @@ public class Travel {
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int ID;
-	
 	private int userId;
+	@Size(min=2, max=30)
 	private String seyehatBas;
+	@Size(min=2, max=30)
 	private String seyehatSon;
+	@Size(min=2, max=30)
 	private String seyehatYeri;
+	@Size(min=2, max=30)
 	private String gidisAmac;
+	@Size(min=2, max=30)
 	private String seyehatMik;
+	@Size(min=2, max=30)
 	private String projeKod;
 	
 	/*@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)

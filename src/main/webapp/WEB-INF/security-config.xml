@@ -7,9 +7,7 @@
 
  <http auto-config="true">
   <access-denied-handler error-page="/403page" />
-  <intercept-url pattern="/user**" access="ROLE_USER,ROLE_ADMIN" />
   <intercept-url pattern="/travels/**" access="ROLE_USER,ROLE_ADMIN" />
-  <intercept-url pattern="/admin**" access="ROLE_ADMIN" />
   <form-login login-page='/login' username-parameter="username"
    password-parameter="password" default-target-url="/travels"
    authentication-failure-url="/login?authfailed" />

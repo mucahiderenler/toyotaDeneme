@@ -1,5 +1,10 @@
 package com.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -11,16 +16,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dao.BolumDao;
 import com.dao.UserDao;
+import com.model.Bolum;
 import com.model.Travel;
 import com.model.User;
 import com.service.TravelService;
 
 @Controller
 public class TravelController {
-
+	
 	private TravelService travelService;
 	@Autowired
 	@Qualifier(value="travelService")
@@ -33,6 +40,7 @@ public class TravelController {
 	@Autowired
 	private BolumDao bolumDao;
 	
+	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
 	public String getTravels(Model model){
 		
@@ -44,7 +52,7 @@ public class TravelController {
 			model.addAttribute("userList", this.userDao.listUsers());
 		}
 		else{
-			model.addAttribute("user", this.userDao.getUserByName((String)authentication.getName()));
+			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		}
 		
 		model.addAttribute("bolumList", this.bolumDao.listBolums());
@@ -59,25 +67,36 @@ public class TravelController {
 		String auth =  authentication.getAuthorities().toString();
 		boolean pass = (auth.contains("ADMIN"));
 		
+		model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
+		
 		if(pass){
 			model.addAttribute("userNameList", this.userDao.hello());
 		}
 		
 		if(id == 0)
 			model.addAttribute("travel", new Travel());
-		else
+		else{
 			model.addAttribute("travel", this.travelService.getTravelById(id));
+			if(this.travelService.getTravelById(id).getUserId() != this.userDao.getUserByName(authentication.getName()).getId()
+					&& !pass){
+				
+				return "403";
+			}
+		}
 		
-		model.addAttribute("user", this.userDao.getUserByName((String)authentication.getName()));
 		
 		return "addTravel";
 	}
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
-	public String updateTravel(@ModelAttribute("travel") Travel t){
+	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result){
+		System.out.println(t.getId());
+		if(result.hasErrors()){
+			System.out.println(result.getFieldErrors());
+			String returnValue = "/travels/add/" + t.getId();
+			return "redirect:" + returnValue;
+		}
 		
-		System.out.println(t.getUserId());
-
 		if(t.getId() == 0){
 			//new travel, add it
 			this.travelService.addTravel(t);
@@ -94,5 +113,39 @@ public class TravelController {
         this.travelService.removeTravel(id);
         return "redirect:/travels";
     }
+	
+	@RequestMapping(value="/travels/exportExcel", method = RequestMethod.GET)
+	public ModelAndView downloadExcel(){
+		ArrayList<String> finalList = new ArrayList<String>();
+		
+		List<Bolum> bolumList = new ArrayList<Bolum>();
+		bolumList = this.bolumDao.listBolums();
+		List<Travel> travelList = new ArrayList<Travel>();
+		travelList = this.travelService.listTravels();
+		List<User> userList = new ArrayList<User>();
+		userList = this.userDao.listUsers();
+		
+		for(Travel t : travelList){
+			
+			for(User u : userList){
+				
+				for(Bolum b : bolumList){
+						if(u.getId() == t.getUserId() && b.getId() == u.getBolumId()){
+							finalList.add(b.getBolumAdi());
+							finalList.add(b.getBolumMudur());
+							finalList.add(u.getUsername());
+							finalList.add(t.getSeyehatBas());
+							finalList.add(t.getSeyehatSon());
+							finalList.add(t.getSeyehatYeri());
+							finalList.add(t.getgidisAmac());
+							finalList.add(t.getseyehatMik());
+							finalList.add(t.getProjeKod());							
+						}
+					}
+				}
+			}
+		return new ModelAndView("excelView", "listOfInfo", finalList);
+		}
+	
 	
 }
