@@ -51,7 +51,7 @@ public class TravelDaoImpl implements TravelDao {
 	@Override
 	public Travel getTravelById(int id) {
 		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.getCurrentSession();		//i ll be back!
+		Session session = this.sessionFactory.getCurrentSession();	
 		Travel t = (Travel) session.load(Travel.class, new Integer(id));
 		logger.info("Travel loaded successfully, Travel details="+t);
 		return t;

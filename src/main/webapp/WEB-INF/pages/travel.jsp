@@ -160,7 +160,7 @@
 				$("#link").popConfirm();
 				
 				// Custom Title, Content and Placement
-				$("#button").popConfirm({
+				$(".button").popConfirm({
 					title: "Sil ?",
 					content: "Emin misiniz?",
 					placement: "bottom"
@@ -176,6 +176,8 @@
 	<table class="table table-striped table-bordered">
 			<thead>
 	      <tr>
+	      	<th>Bolümü</th>
+	      	<th>Müdürü</th>
 	        <th>Seyehat Eden</th>
 	        <th>Seyehat Başlangıcı</th>
 	        <th>Seyehat Sonu</th>
@@ -194,7 +196,10 @@
 	<c:forEach items="${travelList}" var="travel">
 		<tr>
 		<c:forEach items="${userList}" var="user">
-		<c:if test="${user.id == travel.userId }">
+		<c:forEach items="${bolumList}" var="bolum">
+		<c:if test="${user.id == travel.userId}">
+			<td>${bolum.bolumAdi}</td>
+  			<td>${bolum.bolumMudur}</td>
 			<td>${user.username}</td>
 			<td>${travel.seyehatBas}</td>
 			<td>${travel.seyehatSon}</td>
@@ -204,7 +209,7 @@
 			<td>${travel.projeKod}</td>
 			<td>
 			<a href="<c:url value='/travels/remove/${travel.id}' />">
-			<button type="button" class="btn btn-danger" id="button">
+			<button type="button" class="btn btn-danger">
     				<span class="glyphicon glyphicon-minus"></span> Delete
   				</button> 				
   			</a>
@@ -216,30 +221,34 @@
   			</td>
   			</c:if>
   			</c:forEach>
+  			</c:forEach>
   			
-  			<c:if test="${user.id == travel.userId }">
-			<td>${user.username}</td>
-			<td>${travel.seyehatBas}</td>
-			<td>${travel.seyehatSon}</td>
-			<td>${travel.seyehatYeri}</td>
-			<td>${travel.gidisAmac}</td>
-			<td>${travel.seyehatMik}</td>
-			<td>${travel.projeKod}</td>
-			<td>
-			<a href="<c:url value='/travels/remove/${travel.id}' />">
-			<button type="button" class="btn btn-danger" id="button">
-    				<span class="glyphicon glyphicon-minus"></span> Delete
-  				</button>
-  				
-  			</a>
-  				<a href="<c:url value='/travels/add/${travel.id}' />">
-  				<button type="button" class="btn btn-warning">
-    				<span class="glyphicon glyphicon-pencil"></span> Modify
-  				</button>
-  				</a>
-  			</td>
-  			</c:if>
-  			
+  			<c:forEach items="${bolumList}" var="bolum">
+  				<c:if test="${bolum.id == user.bolumId && user.id == travel.userId }">
+  				<td>${bolum.bolumAdi}</td>
+  				<td>${bolum.bolumMudur}</td>
+				<td>${user.username}</td>
+				<td>${travel.seyehatBas}</td>
+				<td>${travel.seyehatSon}</td>
+				<td>${travel.seyehatYeri}</td>
+				<td>${travel.gidisAmac}</td>
+				<td>${travel.seyehatMik}</td>
+				<td>${travel.projeKod}</td>
+				<td>
+				<a href="<c:url value='/travels/remove/${travel.id}' />">
+				<button type="button" class="btn btn-danger">
+	    				<span class="glyphicon glyphicon-minus"></span> Delete
+	  				</button>
+	  				
+	  			</a>
+	  				<a href="<c:url value='/travels/add/${travel.id}' />">
+	  				<button type="button" class="btn btn-warning">
+	    				<span class="glyphicon glyphicon-pencil"></span> Modify
+	  				</button>
+	  				</a>
+	  			</td>
+	  			</c:if>
+  			</c:forEach>
 		</tr>
 	</c:forEach>
 	</table>

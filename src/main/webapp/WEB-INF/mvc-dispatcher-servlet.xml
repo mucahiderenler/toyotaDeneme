@@ -41,6 +41,7 @@
 			<list>
 				<value>com.model.Travel</value>
 				<value>com.model.User</value>
+				<value>com.model.Bolum</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -60,6 +61,10 @@
 	</bean>
 	
 	<bean id="userDao" class="com.dao.UserDaoImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="bolumDao" class="com.dao.BolumDaoImpl">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 	

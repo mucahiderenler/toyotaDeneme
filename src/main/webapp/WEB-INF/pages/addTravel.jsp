@@ -13,6 +13,9 @@
 		.tg .tg-4eph{background-color:#f9f9f9}
 		.ui-datepicker-trigger {height:20px }
 	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -40,51 +43,31 @@
 
 <form:form action="${addAction}" commandName="travel">
 <table>
-<c:if test="${!empty travel.id}">
+
 	<tr>
 		<td>
-			<form:label path="id">
-				<spring:message text="id"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="id" readonly="true"  disabled="true" />
 			<form:hidden path="id" />
-			<br> 
 		</td>
 	</tr>
-		
-	<tr>
-		<td>
-			<form:label path="userId">
-				<spring:message text="User ID"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="userId" />
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<form:label path="seyehatBas">
-				<spring:message text="Seyehat Başlangıcı"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="seyehatBas" cssClass="datepicker" disabled="disabled" />
-		</td>
-	</tr>
-	<tr>
 	
+
 	<tr>
+	<c:if test="${travel.userId != 0 && not empty userNameList}">
 		<td>
-			<form:label path="seyehatSon">
-				<spring:message text="Seyehat Sonu"/>
-			</form:label>
+			<form:select path="userId" items="${userNameList}" disabled= 'true' />
 		</td>
+	</c:if>
+	
+	<c:if test="${travel.userId == 0 && not empty userNameList}">
 		<td>
-			<form:input path="seyehatSon" cssClass="datepicker" disabled="disabled"/>
+			<form:select path="userId" items="${userNameList}" />
 		</td>
+	</c:if>
+	<c:if test="${!(travel.userId == 0 && not empty userNameList)}">
+		<td>
+			<form:hidden path="userId" value="${user.id}"/>
+		</td>
+	</c:if>
 	</tr>
 	
 	<tr>
@@ -111,6 +94,27 @@
 	
 	<tr>
 		<td>
+			<form:label path="seyehatBas">
+				<spring:message text="Seyehat Başlangıcı"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="seyehatBas" cssClass="datepicker" disabled="disabled" />
+		</td>
+	</tr>	
+	<tr>
+		<td>
+			<form:label path="seyehatSon">
+				<spring:message text="Seyehat Sonu"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="seyehatSon" cssClass="datepicker" disabled="disabled"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
 			<form:label path="seyehatMik">
 				<spring:message text="Seyehat Tutarı"/>
 			</form:label>
@@ -130,7 +134,6 @@
 			<form:input path="projeKod" />
 		</td>
 	</tr>
-	</c:if>
 	<tr>
 		<td colspan="2">
 			<c:if test="${travel.id != 0}">

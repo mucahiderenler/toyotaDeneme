@@ -12,13 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="USERS")
 public class User {
-
-	/**
-	 * 
-	 */
-
-
-
 	private int id;
 	
 	@Id
@@ -28,6 +21,7 @@ public class User {
 	private String password;
 	private String authority;
 	private String seyehatBilgi;
+	private int bolumId;
 	
 	/*@ManyToOne
 	@JoinColumn(name="id", nullable=false , insertable=false, updatable = false)
@@ -37,11 +31,12 @@ public class User {
 		
 	}
 	
-	public User(String username, String authority, String seyehatBilgi, int id){
+	public User(String username, String authority, String seyehatBilgi, int id, int bolumId){
 		this.id = id;
 		this.authority = authority;
 		this.username = username;
 		this.seyehatBilgi = seyehatBilgi;
+		this.bolumId = bolumId;
 	}
 	
 	/*public Travel getTravel1(){
@@ -51,6 +46,14 @@ public class User {
 	public void setTravel1(Travel travel1){
 		this.travel1 = travel1;
 	}*/
+	
+	public int getBolumId(){
+		return this.bolumId;
+	}
+	
+	public void setBolumId(int bolumId){
+		this.bolumId = bolumId;
+	}
 
 	public int getId() {
 		return id;

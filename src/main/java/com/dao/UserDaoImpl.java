@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -69,5 +70,40 @@ public class UserDaoImpl implements UserDao {
 		}
 		logger.info("User deleted, infos: " + u);
 	}
+	@Transactional
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Integer> listUsersId() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Integer> listUsersName = session.createQuery("SELECT U.id FROM User U").list();
+		return listUsersName;
+	}
+
+	@Transactional
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> listUsersName() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<String> listUsersName = session.createQuery("SELECT U.username FROM User U").list();
+		return listUsersName;
+	}
+
+	@Override
+	@Transactional
+	public HashMap<Integer, String> hello() {
+		// TODO Auto-generated method stub
+		List <String> name = listUsersName();
+		List <Integer> id = listUsersId();
+		HashMap<Integer,String> hello = new HashMap<Integer,String>();
+		
+		for(int i = 0; i < name.size(); i++){
+			hello.put(id.get(i), name.get(i));
+		}
+		
+		return hello;
+	}
+
+	
+
 
 }
