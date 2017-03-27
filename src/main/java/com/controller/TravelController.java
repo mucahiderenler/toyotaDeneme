@@ -1,23 +1,22 @@
 package com.controller;
 
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dao.BolumDao;
 import com.dao.UserDao;
+import com.helper.DateValidate;
 import com.model.Bolum;
 import com.model.Travel;
 import com.model.User;
@@ -102,8 +102,14 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
-	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result){
+	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result) {
 		if(result.hasErrors()){
+			return "addTravel";
+		}
+		
+		DateValidate date = new DateValidate();
+		if(date.dateValid(t.getSeyehatBas(), t.getSeyehatSon())) {
+			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
 			return "addTravel";
 		}
 		

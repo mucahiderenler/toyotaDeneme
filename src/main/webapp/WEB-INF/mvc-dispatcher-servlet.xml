@@ -86,6 +86,7 @@
 	<bean id="travelService" class="com.service.TravelServiceImpl">
 		<property name="travelDao" ref="travelDao"></property>
 	</bean>
+	
 		
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	

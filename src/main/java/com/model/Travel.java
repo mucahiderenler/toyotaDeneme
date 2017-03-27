@@ -31,6 +31,7 @@ public class Travel {
 	private String seyehatMik;
 	@NotEmpty(message="Proje kodu girilmelidir.")
 	private String projeKod;
+	private String validErrorMessage;
 	
 	/*@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<User> user;*/
@@ -118,6 +119,14 @@ public class Travel {
 	
 	public void setProjeKod(String projeKod){
 		this.projeKod = projeKod;
+	}
+	
+	public String getValidErrorMessage() {
+		return this.validErrorMessage;
+	}
+	
+	public void setValidErrorMessage(String msg) {
+		this.validErrorMessage = msg;
 	}
 	
 }
