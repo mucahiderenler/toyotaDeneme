@@ -11,6 +11,8 @@
 		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
 		.tg .tg-4eph{background-color:#f9f9f9}
 		.ui-datepicker-trigger {height:20px }
+		.error {
+        color: red; font-weight: bold;}
 	</style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -37,7 +39,6 @@
 
 <c:url var="addAction" value="/travels/add" ></c:url>
 <br>
-<form:errors path="travel"/>
 <form:form action="${addAction}" commandName="travel">
 <table>
 
@@ -77,7 +78,7 @@
 		<td>
 			<form:input path="seyehatYeri" />
 		</td>
-		<td><form:errors path="seyehatYeri"/></td>
+		<td><form:errors path="seyehatYeri" cssClass="error"/></td>
 	</tr>
 	
 	<tr>
@@ -89,6 +90,7 @@
 		<td>
 			<form:input path="gidisAmac" />
 		</td>
+		<td><form:errors path="gidisAmac" cssClass="error"/></td>
 	</tr>
 	
 	<tr>
@@ -98,8 +100,9 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="seyehatBas" cssClass="datepicker" disabled="disabled" />
+			<form:input path="seyehatBas" cssClass="datepicker"  />
 		</td>
+		<td><form:errors path="seyehatBas" cssClass="error"/></td>
 	</tr>	
 	<tr>
 		<td>
@@ -108,8 +111,9 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="seyehatSon" cssClass="datepicker" disabled="disabled"/>
+			<form:input path="seyehatSon" cssClass="datepicker" />
 		</td>
+		<td><form:errors path="seyehatSon" cssClass="error"/></td>
 	</tr>
 	
 	<tr>
@@ -121,6 +125,7 @@
 		<td>
 			<form:input path="seyehatMik" />
 		</td>
+		<td><form:errors path="seyehatMik" cssClass="error"/></td>
 	</tr>
 	
 	<tr>
@@ -132,6 +137,7 @@
 		<td>
 			<form:input path="projeKod" />
 		</td>
+		<td><form:errors path="projeKod" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td colspan="2">

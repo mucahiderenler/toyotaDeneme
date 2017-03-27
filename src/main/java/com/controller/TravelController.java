@@ -1,17 +1,23 @@
 package com.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +34,14 @@ import com.service.TravelService;
 @Controller
 public class TravelController {
 	
+	/*@InitBinder
+	public void InitBinder(WebDataBinder binder){
+		//binder.setDisallowedFields(new String[] {"studentMobile"});
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd//mm//yyyy");
+		Calendar cal = Calendar.getInstance();
+		binder.registerCustomEditor(Date.class, "seyehatBas", new CustomDateEditor(dateFormat,false));
+	}*/
+	
 	private TravelService travelService;
 	@Autowired
 	@Qualifier(value="travelService")
@@ -39,7 +53,6 @@ public class TravelController {
 	private UserDao userDao;
 	@Autowired
 	private BolumDao bolumDao;
-	
 	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
 	public String getTravels(Model model){
@@ -90,11 +103,8 @@ public class TravelController {
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
 	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result){
-		System.out.println(t.getId());
 		if(result.hasErrors()){
-			System.out.println(result.getFieldErrors());
-			String returnValue = "/travels/add/" + t.getId();
-			return "redirect:" + returnValue;
+			return "addTravel";
 		}
 		
 		if(t.getId() == 0){
@@ -134,8 +144,8 @@ public class TravelController {
 							finalList.add(b.getBolumAdi());
 							finalList.add(b.getBolumMudur());
 							finalList.add(u.getUsername());
-							finalList.add(t.getSeyehatBas());
-							finalList.add(t.getSeyehatSon());
+							finalList.add(t.getSeyehatBas().toString());
+							finalList.add(t.getSeyehatSon().toString());
 							finalList.add(t.getSeyehatYeri());
 							finalList.add(t.getgidisAmac());
 							finalList.add(t.getseyehatMik());

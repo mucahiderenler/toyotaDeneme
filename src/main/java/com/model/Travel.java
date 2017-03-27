@@ -1,12 +1,14 @@
 package com.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -17,17 +19,17 @@ public class Travel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int ID;
 	private int userId;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Seyehat başlangıcı girilmelidir.")
 	private String seyehatBas;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Seyehat sonu girilmelidir.")
 	private String seyehatSon;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Seyehat yeri girilmelidir.")
 	private String seyehatYeri;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Gidiş amacınızı girilmelidir..")
 	private String gidisAmac;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Seyehat tutarı girilmelidir.")
 	private String seyehatMik;
-	@Size(min=2, max=30)
+	@NotEmpty(message="Proje kodu girilmelidir.")
 	private String projeKod;
 	
 	/*@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
