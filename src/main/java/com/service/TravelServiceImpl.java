@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,13 @@ public class TravelServiceImpl implements TravelService {
 		// TODO Auto-generated method stub
 		this.travelDao.removeTravel(id);
 		
+	}
+
+	@Override
+	@Transactional
+	public List<Travel> listTravelsByDate(Date start, Date end) {
+		// TODO Auto-generated method stub
+		return this.travelDao.listTravelsByDate(start, end);
 	}
 
 }

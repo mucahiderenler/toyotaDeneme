@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -67,6 +68,14 @@ public class TravelDaoImpl implements TravelDao {
 		}
 		logger.info("Travel deleted successfully, Travel details="+t);
 		
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Travel> listTravelsByDate(Date start, Date end){
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Travel> personsList = session.createQuery("from Travel T WHERE T.seyehatBas > '"+start+"' and T.seyehatSon > '" + end +"'").list();
+		//System.out.println("from Travel T WHERE T.seyehatBas < '"+start+"' and T.seyehatSon > '" + end +"'");
+		return personsList;
 	}
 
 }

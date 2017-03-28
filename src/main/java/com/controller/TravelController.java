@@ -1,12 +1,10 @@
 package com.controller;
 
-import java.text.DateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -34,14 +32,6 @@ import com.service.TravelService;
 @Controller
 public class TravelController {
 	
-	/*@InitBinder
-	public void InitBinder(WebDataBinder binder){
-		//binder.setDisallowedFields(new String[] {"studentMobile"});
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd//mm//yyyy");
-		Calendar cal = Calendar.getInstance();
-		binder.registerCustomEditor(Date.class, "seyehatBas", new CustomDateEditor(dateFormat,false));
-	}*/
-	
 	private TravelService travelService;
 	@Autowired
 	@Qualifier(value="travelService")
@@ -53,9 +43,11 @@ public class TravelController {
 	private UserDao userDao;
 	@Autowired
 	private BolumDao bolumDao;
+	DateValidate date = new DateValidate();
+	
 	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
-	public String getTravels(Model model){
+	public String getTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) throws ParseException {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
@@ -63,20 +55,52 @@ public class TravelController {
 		
 		if(pass){
 			model.addAttribute("userList", this.userDao.listUsers());
+
 		}
 		else{
 			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		}
 		
-		model.addAttribute("bolumList", this.bolumDao.listBolums());
 		model.addAttribute("travelList",this.travelService.listTravels());
+		model.addAttribute("travel", new Travel());
+		model.addAttribute("bolumList", this.bolumDao.listBolums());
 		
+		return "travel";
+	}
+	
+	@RequestMapping(value="/travels", method = RequestMethod.POST)
+	public String updateTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) throws ParseException{
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		String auth =  authentication.getAuthorities().toString();
+		boolean pass = (auth.contains("ADMIN"));
+		
+		if(t.getSeyehatBas() != null && t.getSeyehatSon() != null) {
+			
+			Date start = date.stringToDate(t.getSeyehatBas());
+			Date end = date.stringToDate(t.getSeyehatSon());
+			List<Travel> betweenDatesList = date.betweenDates(start, end, this.travelService.listTravels());
+			model.addAttribute("travelListDate",betweenDatesList);
+			System.out.println(betweenDatesList.isEmpty());
+		}
+		else {
+			model.addAttribute("travelList",this.travelService.listTravels());
+		}
+		
+		if(pass) {
+			model.addAttribute("userList", this.userDao.listUsers());
+		}
+		else {
+			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
+		}
+		model.addAttribute("bolumList", this.bolumDao.listBolums());
 		return "travel";
 	}
 	
 	@RequestMapping(value= "/travels/add/{id}", method = RequestMethod.GET)
 	public String addTravel(@PathVariable("id") int id,Model model){
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
 		boolean pass = (auth.contains("ADMIN"));
 		
@@ -103,12 +127,12 @@ public class TravelController {
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
 	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result) {
+		try {
 		if(result.hasErrors()){
 			return "addTravel";
 		}
 		
-		DateValidate date = new DateValidate();
-		if(date.dateValid(t.getSeyehatBas(), t.getSeyehatSon())) {
+		if(date.dateValid(date.stringToDate(t.getSeyehatBas()), date.stringToDate(t.getSeyehatSon()))) {
 			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
 			return "addTravel";
 		}
@@ -122,6 +146,10 @@ public class TravelController {
 		}
 		
 		return "redirect:/travels";
+		} catch(ParseException ex) {
+			t.setValidErrorMessage("Tarih degerleri düzgün girilmelidir.");
+			return "addTravel";
+		}
 	}
 	
 	@RequestMapping("/travels/remove/{id}")
