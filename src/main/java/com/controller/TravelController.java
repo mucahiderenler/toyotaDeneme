@@ -47,7 +47,7 @@ public class TravelController {
 	
 	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
-	public String getTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) throws ParseException {
+	public String getTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model){
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
@@ -60,7 +60,8 @@ public class TravelController {
 		else{
 			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		}
-		
+		model.addAttribute("userNameList", this.userDao.IdAndUser());
+		System.out.println(this.userDao.IdAndUser().isEmpty());
 		model.addAttribute("travelList",this.travelService.listTravels());
 		model.addAttribute("travel", new Travel());
 		model.addAttribute("bolumList", this.bolumDao.listBolums());
@@ -69,32 +70,38 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value="/travels", method = RequestMethod.POST)
-	public String updateTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) throws ParseException{
+	public String updateTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
 		boolean pass = (auth.contains("ADMIN"));
 		
-		if(t.getSeyehatBas() != null && t.getSeyehatSon() != null) {
+		try {
+			if(t.getSeyehatBas() != null && t.getSeyehatSon() != null) {
+				
+				Date start = date.stringToDate(t.getSeyehatBas());
+				Date end = date.stringToDate(t.getSeyehatSon());
+				List<Travel> betweenDatesList = date.betweenDates(start, end, this.travelService.listTravels());
+				model.addAttribute("travelListDate",betweenDatesList);
+				System.out.println(betweenDatesList.isEmpty());
+			}
+			else {
+				model.addAttribute("travelList",this.travelService.listTravels());
+			}
 			
-			Date start = date.stringToDate(t.getSeyehatBas());
-			Date end = date.stringToDate(t.getSeyehatSon());
-			List<Travel> betweenDatesList = date.betweenDates(start, end, this.travelService.listTravels());
-			model.addAttribute("travelListDate",betweenDatesList);
-			System.out.println(betweenDatesList.isEmpty());
+			if(pass) {
+				model.addAttribute("userList", this.userDao.listUsers());
+			}
+			else {
+				model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
+			}
+			model.addAttribute("bolumList", this.bolumDao.listBolums());
+			model.addAttribute("userNameList", this.userDao.IdAndUser());
+			return "travel";
+		}	catch(ParseException ex) {
+			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
+			return "travel";
 		}
-		else {
-			model.addAttribute("travelList",this.travelService.listTravels());
-		}
-		
-		if(pass) {
-			model.addAttribute("userList", this.userDao.listUsers());
-		}
-		else {
-			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
-		}
-		model.addAttribute("bolumList", this.bolumDao.listBolums());
-		return "travel";
 	}
 	
 	@RequestMapping(value= "/travels/add/{id}", method = RequestMethod.GET)
@@ -107,7 +114,7 @@ public class TravelController {
 		model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		
 		if(pass){
-			model.addAttribute("userNameList", this.userDao.hello());
+			model.addAttribute("userNameList", this.userDao.IdAndUser());
 		}
 		
 		if(id == 0)
@@ -191,5 +198,14 @@ public class TravelController {
 		return new ModelAndView("excelView", "listOfInfo", finalList);
 		}
 	
-	
+	@RequestMapping(value="/travels/byName", method = RequestMethod.POST)
+	public String searchByName(@ModelAttribute("travel") Travel t, Model model) {
+		
+		model.addAttribute("user",this.userDao.getUserById(t.getUserId()));
+		model.addAttribute("travelList",this.travelService.listTravels());
+		model.addAttribute("bolumList",this.bolumDao.listBolums());
+		model.addAttribute("userNameList", this.userDao.IdAndUser());
+		
+		return "travel";
+	}
 }

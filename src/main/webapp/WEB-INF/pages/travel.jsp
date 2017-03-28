@@ -166,6 +166,17 @@
 </head>
 
 <body>
+<br><br>
+<c:url var="searchByName" value="/travels/byName" ></c:url>
+<c:if test="${not empty userNameList }">
+<form:form action="${searchByName}" commandName="travel">
+	Kullanıcı: 
+	<form:select path="userId" items="${userNameList}" >
+	</form:select>
+	<span style="display:inline-block; width:12;"></span><button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form:form>
+</c:if>
+<br>
 <br>
 <c:url var="searchAction" value="/travels" ></c:url>
 <form:form action="${searchAction}" commandName="travel">	
@@ -346,7 +357,7 @@
 	</a>
 	</c:if>
 
-
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
 
 </body>

@@ -87,10 +87,21 @@ public class UserDaoImpl implements UserDao {
 		List<String> listUsersName = session.createQuery("SELECT U.username FROM User U").list();
 		return listUsersName;
 	}
+	
+	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public User getUserById(int id) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();	
+		List<User> u = session.createQuery("FROM User U WHERE U.id = '"+ id + "'").list();
+		logger.info("Travel loaded successfully, Travel details="+u.get(0));
+		return u.get(0);
+	}
 
 	@Override
 	@Transactional
-	public HashMap<Integer, String> hello() {
+	public HashMap<Integer, String> IdAndUser() {
 		// TODO Auto-generated method stub
 		List <String> name = listUsersName();
 		List <Integer> id = listUsersId();

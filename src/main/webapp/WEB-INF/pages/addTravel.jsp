@@ -57,7 +57,9 @@
 	
 	<c:if test="${travel.userId == 0 && not empty userNameList}">
 		<td>
-			<form:select path="userId" items="${userNameList}" />
+			<div class="dropdown">
+				<form:select path="userId" items="${userNameList}"/>
+			</div>
 		</td>
 	</c:if>
 	<c:if test="${!(travel.userId == 0 && not empty userNameList)}">

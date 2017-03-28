@@ -13,6 +13,7 @@ public interface UserDao {
 	public void removeUser(int id);
 	public List<Integer> listUsersId();
 	public List<String> listUsersName();
-	public HashMap<Integer,String> hello();
+	public HashMap<Integer,String> IdAndUser();
+	public User getUserById(int id);
 	
 }
