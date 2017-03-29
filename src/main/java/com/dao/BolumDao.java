@@ -10,4 +10,5 @@ public interface BolumDao {
 	public void updateBolum(Bolum b);
 	public Bolum getBolumById(int id);
 	public List<Bolum> listBolums();
+	public Bolum getBolumByName(String name);
 }

@@ -22,10 +22,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	@Transactional
 	public void addUser(User u) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(u);
+		session.save(u);
 		
 	}
 
@@ -51,10 +52,10 @@ public class UserDaoImpl implements UserDao {
 	}
 	@Transactional
 	@Override
-	public User getUserByName(String name) {
+	public User getUserById(int id) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		User u = (User) session.load(User.class, new String(name));
+		User u = (User) session.load(User.class, new Integer(id));
 		logger.info("User loaded, infos: " + u);
 		return u;
 	}
@@ -91,14 +92,13 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public User getUserById(int id) {
+	public User getUserByName(String name) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();	
-		List<User> u = session.createQuery("FROM User U WHERE U.id = '"+ id + "'").list();
+		List<User> u = session.createQuery("FROM User U WHERE U.username = '"+ name + "'").list();
 		logger.info("Travel loaded successfully, Travel details="+u.get(0));
 		return u.get(0);
 	}
-
 	@Override
 	@Transactional
 	public HashMap<Integer, String> IdAndUser() {

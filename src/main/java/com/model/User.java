@@ -9,16 +9,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+
 @Entity
 @Table(name="USERS")
 public class User {
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Id
-	@Column(name="username")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@NotEmpty(message="username boş olamaz!")
 	private String username;
+	@NotEmpty(message="şifre boş olamaz!")
 	private String password;
+	@NotEmpty(message="rol boş olamaz!")
 	private String authority;
 	private String seyehatBilgi;
 	private int bolumId;

@@ -100,6 +100,7 @@ public class TravelController {
 			return "travel";
 		}	catch(ParseException ex) {
 			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
+			model.addAttribute("userNameList", this.userDao.IdAndUser());
 			return "travel";
 		}
 	}

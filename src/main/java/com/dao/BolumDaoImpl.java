@@ -52,5 +52,14 @@ public class BolumDaoImpl implements BolumDao {
 		List<Bolum> bolumList = session.createQuery("from Bolum").list();
 		return bolumList;
 	}
+	
+	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public Bolum getBolumByName(String name) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Bolum> bolum = session.createQuery("FROM Bolum b WHERE b.bolumAdi='" + name +"'").list();
+		return bolum.get(0);
+	}
 
 }
