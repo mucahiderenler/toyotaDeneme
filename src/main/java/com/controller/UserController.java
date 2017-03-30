@@ -2,6 +2,8 @@ package com.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,13 +25,17 @@ public class UserController {
 	
 	@RequestMapping(value="/users", method = RequestMethod.GET)
 	public String getUsers(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		model.addAttribute("userList", this.userDao.listUsers());
 		model.addAttribute("bolumList", this.bolumDao.listBolums());
+		model.addAttribute("user",this.userDao.getUserByName(authentication.getName()));
 		return "user";
 	}
 	
 	@RequestMapping(value="/userAdd/{id}", method = RequestMethod.GET)
 	public String userGet(Model model, @PathVariable("id") int id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		
 		if(id == 0) {
 			model.addAttribute("user",new User());
 		}
@@ -39,6 +45,7 @@ public class UserController {
 			hello.setSeyehatZaman("");
 			model.addAttribute("user",hello);
 		}
+		model.addAttribute("userSession",this.userDao.getUserByName(authentication.getName()));
 		model.addAttribute("bolumAdiandId",this.bolumDao.IdAndBolum());
 		return "userAdd";
 	}

@@ -60,8 +60,8 @@ public class TravelController {
 		else{
 			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		}
+		model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));
 		model.addAttribute("userNameList", this.userDao.IdAndUser());
-		System.out.println(this.userDao.IdAndUser().isEmpty());
 		model.addAttribute("travelList",this.travelService.listTravels());
 		model.addAttribute("travel", new Travel());
 		model.addAttribute("bolumList", this.bolumDao.listBolums());
@@ -96,6 +96,7 @@ public class TravelController {
 				model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 			}
 			model.addAttribute("bolumList", this.bolumDao.listBolums());
+			model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));
 			model.addAttribute("userNameList", this.userDao.IdAndUser());
 			
 			return "travel";
@@ -204,11 +205,12 @@ public class TravelController {
 	@RequestMapping(value="/travels/byName", method = RequestMethod.POST)
 	public String searchByName(@ModelAttribute("travel") Travel t, Model model) {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		model.addAttribute("user",this.userDao.getUserById(t.getUserId()));
 		model.addAttribute("travelList",this.travelService.listTravels());
 		model.addAttribute("bolumList",this.bolumDao.listBolums());
 		model.addAttribute("userNameList", this.userDao.IdAndUser());
-		
+		model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));	
 		return "travel";
 	}
 }

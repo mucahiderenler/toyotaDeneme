@@ -13,6 +13,12 @@
 		.ui-datepicker-trigger {height:20px }
 		.error {
         color: red; font-weight: bold;}
+        div.relative {
+    		position: relative;
+    		width: 400px;
+    		height: 200px;
+    		border: 3px solid #73AD21;
+} 
 	</style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -20,6 +26,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   	<script>
   	$(function(){
   	     $(".datepicker").datepicker({
@@ -34,7 +41,22 @@
 </head>
 <body>
 
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
+<ul class="nav pull-right">
+  <li id="fat-menu" class="dropdown pull-right">
+    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"> ${user.username} <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+    <li><a tabindex="-1" href="/hihi/travels">Seyehatler</a></li>
+    <c:if test="${not empty userNameList }">
+    <li><a tabindex="-1" href="/hihi/users">Kullanıcı Listesi</a></li>
+    </c:if>
+    <li><a tabindex="-1" href="/hihi/userAdd/${user.id}">Kişisel Bilgiler</a></li>
+    <li class="divider"></li>
+    <li><a tabindex="-1" href="${logoutUrl}">Çıkış</a></li>
+    </ul>
+  </li>
+</ul>
 
 <c:url var="addAction" value="/travels/add" ></c:url>
 <span class="error">${travel.validErrorMessage}</span>

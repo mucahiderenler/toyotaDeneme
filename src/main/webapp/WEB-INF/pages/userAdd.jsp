@@ -2,7 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <style type="text/css">
@@ -10,7 +9,7 @@
         color: red; font-weight: bold;}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
@@ -38,9 +37,26 @@
 	  }
 	}
 	</script>
+	
 <title>Add user</title>
 </head>
 <body>
+
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
+
+<ul class="nav pull-right">
+  <li id="fat-menu" class="dropdown pull-right">
+    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"> ${userSession.username} <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+    <li><a tabindex="-1" href="/hihi/travels">Seyehatler</a></li>
+    <li><a tabindex="-1" href="/hihi/users">Kullanıcı Listesi</a></li>
+    <li><a tabindex="-1" href="/hihi/userAdd/${userSession.id}">Kişisel Bilgiler</a></li>
+    <li class="divider"></li>
+    <li><a tabindex="-1" href="${logoutUrl}">Çıkış</a></li>
+    </ul>
+  </li>
+</ul>
+
 <c:url var="addAction" value="/userAdd" ></c:url>
 <form:form action="${addAction}" commandName="user">
 	<table>
@@ -53,12 +69,12 @@
 		<tr>
 			<td>
 				<form:label path="username">
-					<spring:message text="Kullanıcı Adı"/>
+					<spring:message text="Kullanıcı Adı:"/>
 				</form:label>
 			</td>
 			
 			<td>
-				<form:input path="username" />
+				<form:input type="username" path="username" class="form-control mx-sm-3" />
 			</td>
 			<td><form:errors path="username" cssClass="error"/></td>
 	    </tr>
@@ -66,12 +82,12 @@
 	    <tr>
 			<td>
 				<form:label path="password">
-					<spring:message text="Şifre"/>
+					<spring:message text="Şifre:"/>
 				</form:label>
 			</td>
 			
 			<td>
-				<form:input path="password" />
+				<form:input type="password" path="password" class="form-control mx-sm-3" aria-describedby="passwordHelpInline"/>
 			</td>
 			<td><form:errors path="password" cssClass="error"/></td>
 	</tr>
@@ -80,7 +96,7 @@
 			
 			<td>
 				<form:label path="bolumId">
-					<spring:message text="Bolum adı"/>
+					<spring:message text="Bolum adı:"/>
 				</form:label>
 			</td>
 			
@@ -112,7 +128,7 @@
 	
 	<tr>
 		<td>
-				<spring:message text="Bilgilendirme :"/>
+				<spring:message text="<b>Bilgilendirme :</b>"/>
 		</td>
 		
 		<td>
@@ -145,11 +161,23 @@
 	
 	
 	<tr>
-		<td><input type="submit"
-					value="<spring:message text="Add User"/>" /></td>
-	</tr>	
+		<td colspan="2">
+			<c:if test="${user.id != 0}">
+				<input type="submit"
+					value="<spring:message text="Güncelle"/>" />
+				<a href="/hihi/users" class="btn btn-danger">İptal</a>
+			</c:if>
+			<c:if test="${user.id == 0}">
+				<input type="submit" class="btn btn-success"
+					value="<spring:message text="Ekle"/>" />
+				<a href="/hihi/users" class="btn btn-danger">İptal</a>
+			</c:if>
+		</td>
+	</tr>
 	</table>
 </form:form>
+
+
 
 
 </body>

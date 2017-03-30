@@ -14,12 +14,10 @@ public class LoginController {
    String denied) {
   String message = "";
   if (authfailed != null) {
-   message = "Invalid username of password, try again !";
+   message = "Kullanıcı adı veya şifre yanlış !";
   } else if (logout != null) {
-   message = "Logged Out successfully, login again to continue !";
-  } else if (denied != null) {
-   message = "Access denied for this user !";
-  }
+   message = "Çıkış yapıldı !";
+  } 
   return new ModelAndView("login", "message", message);
  }
 

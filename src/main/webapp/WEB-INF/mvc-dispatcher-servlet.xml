@@ -10,7 +10,7 @@
   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
  <context:component-scan base-package="com.controller" />
- <mvc:annotation-driven />
+
  
 
 <bean id="dataSource"
@@ -47,6 +47,10 @@
   </property>
  </bean>
  
+ <mvc:resources mapping="/javascript/**" location="/javascript/" /> 
+  <mvc:resources mapping="/css/**" location="/css/" /> 
+ 
+ <mvc:annotation-driven />
  
  <!-- Hibernate 4 SessionFactory Bean definition -->
 	<bean id="hibernate4AnnotatedSessionFactory"
