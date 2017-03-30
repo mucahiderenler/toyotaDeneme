@@ -1,7 +1,9 @@
 package com.dao;
 
-import com.model.Bolum;
+import java.util.HashMap;
 import java.util.List;
+
+import com.model.Bolum;
 
 
 
@@ -11,4 +13,7 @@ public interface BolumDao {
 	public Bolum getBolumById(int id);
 	public List<Bolum> listBolums();
 	public Bolum getBolumByName(String name);
+	public List<Integer> listBolumId();
+	public List<String> listBolumName();
+	public HashMap <Integer,String> IdAndBolum();
 }

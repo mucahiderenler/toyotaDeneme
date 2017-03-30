@@ -31,6 +31,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	@Transactional
 	public void updateUser(User u) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
@@ -61,6 +62,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	@Transactional
 	public void removeUser(int id) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();

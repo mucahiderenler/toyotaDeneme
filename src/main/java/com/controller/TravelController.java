@@ -70,7 +70,7 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value="/travels", method = RequestMethod.POST)
-	public String updateTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) {
+	public String updateTravelsbyDate(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
@@ -97,7 +97,9 @@ public class TravelController {
 			}
 			model.addAttribute("bolumList", this.bolumDao.listBolums());
 			model.addAttribute("userNameList", this.userDao.IdAndUser());
+			
 			return "travel";
+			
 		}	catch(ParseException ex) {
 			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
 			model.addAttribute("userNameList", this.userDao.IdAndUser());

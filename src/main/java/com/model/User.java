@@ -26,7 +26,8 @@ public class User {
 	private String password;
 	@NotEmpty(message="rol boş olamaz!")
 	private String authority;
-	private String seyehatBilgi;
+	private String seyehatZaman;
+	private String seyehatGun;
 	private int bolumId;
 	
 	/*@ManyToOne
@@ -37,11 +38,11 @@ public class User {
 		
 	}
 	
-	public User(String username, String authority, String seyehatBilgi, int id, int bolumId){
+	public User(String username, String authority, String seyehatZaman, int id, int bolumId){
 		this.id = id;
 		this.authority = authority;
 		this.username = username;
-		this.seyehatBilgi = seyehatBilgi;
+		this.seyehatZaman = seyehatZaman;
 		this.bolumId = bolumId;
 	}
 	
@@ -93,12 +94,20 @@ public class User {
 		this.authority = authority;
 	}
 	
-	public String getSeyehatBilgi() {
-		return this.seyehatBilgi;
+	public String getSeyehatZaman() {
+		return this.seyehatZaman;
 	}
 
-	public void setSeyehatBilgi(String seyehatBilgi) {
-		this.seyehatBilgi = seyehatBilgi;
+	public void setSeyehatZaman(String seyehatZaman) {
+		this.seyehatZaman = seyehatZaman;
+	}	
+	
+	public String getSeyehatGun() {
+		return this.seyehatGun;
+	}
+
+	public void setSeyehatGun(String seyehatGun) {
+		this.seyehatGun = seyehatGun;
 	}	
 	
 }

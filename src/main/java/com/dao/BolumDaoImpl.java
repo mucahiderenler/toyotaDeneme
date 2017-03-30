@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -60,6 +61,37 @@ public class BolumDaoImpl implements BolumDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Bolum> bolum = session.createQuery("FROM Bolum b WHERE b.bolumAdi='" + name +"'").list();
 		return bolum.get(0);
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Integer> listBolumId(){
+		Session session = this.sessionFactory.getCurrentSession();
+		List <Integer> ids = session.createQuery("SELECT b.id FROM Bolum b").list();
+		return ids;
+	}
+	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<String> listBolumName(){
+		Session session = this.sessionFactory.getCurrentSession();
+		List <String> names = session.createQuery("SELECT b.bolumAdi FROM Bolum b").list();
+		return names;
+	}
+	
+	@Override
+	@Transactional
+	public HashMap <Integer,String> IdAndBolum(){
+		
+		List <Integer> ids = listBolumId();
+		List <String> names = listBolumName();
+		HashMap<Integer,String> hello = new HashMap<Integer,String>();
+		
+		for(int i = 0; i < ids.size(); i++) {
+			hello.put(ids.get(i), names.get(i));
+		}
+		return hello;
 	}
 
 }
