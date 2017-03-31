@@ -24,7 +24,7 @@
 </property>
  
   <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-  <property name="url" value="jdbc:mysql://localhost:3306/com" />
+  <property name="url" value="jdbc:mysql://localhost:3306/toyotaDeneme?characterEncoding=UTF-8" />
   <property name="username" value="root" />
   <property name="password" value="mucahid1616" />
  </bean>
@@ -49,6 +49,7 @@
  
  <mvc:resources mapping="/javascript/**" location="/javascript/" /> 
   <mvc:resources mapping="/css/**" location="/css/" /> 
+  <mvc:resources mapping="/db/**" location="/db/" />
  
  <mvc:annotation-driven />
  
@@ -66,11 +67,13 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- <prop key="hibernate.hbm2ddl.import_files">/db/toyotaDeneme.sql</prop> -->
+				<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.connection.CharSet">utf8</prop>
 				<prop key="hibernate.connection.useUnicode">true</prop>
 				<prop key="hibernate.connection.characterEncoding">utf8</prop>
-				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>

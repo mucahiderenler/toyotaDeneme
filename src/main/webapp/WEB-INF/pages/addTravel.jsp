@@ -165,12 +165,14 @@
 	<tr>
 		<td colspan="2">
 			<c:if test="${travel.id != 0}">
-				<input type="submit"
-					value="<spring:message text="Edit Travel"/>" />
+				<input type="submit" class="btn btn-success"
+					value="<spring:message text="Güncelle"/>" />
+				<a href="/hihi/travels" class="btn btn-danger">İptal</a>
 			</c:if>
 			<c:if test="${travel.id == 0}">
-				<input type="submit"
-					value="<spring:message text="Add Travel"/>" />
+				<input type="submit" class="btn btn-success"
+					value="<spring:message text="Ekle"/>" />
+				<a href="/hihi/travels" class="btn btn-danger">İptal</a>
 			</c:if>
 		</td>
 	</tr>

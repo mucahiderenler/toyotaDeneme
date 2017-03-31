@@ -47,22 +47,26 @@ public class TravelController {
 	
 	
 	@RequestMapping(value="/travels", method = RequestMethod.GET)
-	public String getTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model){
+	public String getTravels(@Valid @ModelAttribute("travel") Travel t,BindingResult result,Model model) throws ParseException{
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
 		String auth =  authentication.getAuthorities().toString();
 		boolean pass = (auth.contains("ADMIN"));
+		List<Travel> travelList = this.travelService.listTravels();
 		
-		if(pass){
+		travelList = date.last1Year(travelList); // son 1 sene içindeki seyehatleri getirir.
+			
+		
+		if(pass){  //admin
 			model.addAttribute("userList", this.userDao.listUsers());
+			model.addAttribute("userNameList", this.userDao.IdAndUser());
 
 		}
-		else{
+		else{	  //user
 			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 		}
 		model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));
-		model.addAttribute("userNameList", this.userDao.IdAndUser());
-		model.addAttribute("travelList",this.travelService.listTravels());
+		model.addAttribute("travelList",travelList);
 		model.addAttribute("travel", new Travel());
 		model.addAttribute("bolumList", this.bolumDao.listBolums());
 		
@@ -77,27 +81,28 @@ public class TravelController {
 		boolean pass = (auth.contains("ADMIN"));
 		
 		try {
-			if(t.getSeyehatBas() != null && t.getSeyehatSon() != null) {
-				
-				Date start = date.stringToDate(t.getSeyehatBas());
-				Date end = date.stringToDate(t.getSeyehatSon());
-				List<Travel> betweenDatesList = date.betweenDates(start, end, this.travelService.listTravels());
-				model.addAttribute("travelListDate",betweenDatesList);
-				System.out.println(betweenDatesList.isEmpty());
-			}
-			else {
-				model.addAttribute("travelList",this.travelService.listTravels());
-			}
 			
 			if(pass) {
 				model.addAttribute("userList", this.userDao.listUsers());
+				model.addAttribute("userNameList", this.userDao.IdAndUser());
 			}
 			else {
 				model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
 			}
 			model.addAttribute("bolumList", this.bolumDao.listBolums());
 			model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));
-			model.addAttribute("userNameList", this.userDao.IdAndUser());
+			System.out.println(t.getSeyehatBas());
+			if(t.getSeyehatBas() != null && t.getSeyehatBas() != "" && t.getSeyehatSon() != null &&t.getSeyehatSon() != "") {
+				
+				Date start = date.stringToDate(t.getSeyehatBas());
+				Date end = date.stringToDate(t.getSeyehatSon());
+				List<Travel> betweenDatesList = date.betweenDates(start, end, this.travelService.listTravels());
+				model.addAttribute("travelListDate",betweenDatesList);
+			}
+			else {
+				model.addAttribute("travelList",this.travelService.listTravels());
+				return "travel";
+			}
 			
 			return "travel";
 			

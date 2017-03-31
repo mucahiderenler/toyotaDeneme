@@ -49,7 +49,9 @@
     <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"> ${userSession.username} <b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
     <li><a tabindex="-1" href="/hihi/travels">Seyehatler</a></li>
+    <c:if test="${not empty admin }">
     <li><a tabindex="-1" href="/hihi/users">Kullanıcı Listesi</a></li>
+    </c:if>
     <li><a tabindex="-1" href="/hihi/userAdd/${userSession.id}">Kişisel Bilgiler</a></li>
     <li class="divider"></li>
     <li><a tabindex="-1" href="${logoutUrl}">Çıkış</a></li>
@@ -163,7 +165,7 @@
 	<tr>
 		<td colspan="2">
 			<c:if test="${user.id != 0}">
-				<input type="submit"
+				<input type="submit" class="btn btn-success"
 					value="<spring:message text="Güncelle"/>" />
 				<a href="/hihi/users" class="btn btn-danger">İptal</a>
 			</c:if>

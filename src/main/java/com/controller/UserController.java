@@ -1,6 +1,8 @@
 package com.controller;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,7 @@ import com.model.User;
 
 @Controller
 public class UserController {
+	
 	@Autowired
 	private BolumDao bolumDao;
 	@Autowired
@@ -34,7 +37,12 @@ public class UserController {
 	
 	@RequestMapping(value="/userAdd/{id}", method = RequestMethod.GET)
 	public String userGet(Model model, @PathVariable("id") int id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String auth =  authentication.getAuthorities().toString();
+		boolean pass = (auth.contains("ADMIN"));
+		if(pass) {
+			model.addAttribute("admin","admin"); 		//eğer adminse kullanıcı listesini dropdownda göremez.
+		}
 		
 		if(id == 0) {
 			model.addAttribute("user",new User());
@@ -44,6 +52,9 @@ public class UserController {
 			hello.setSeyehatGun("");
 			hello.setSeyehatZaman("");
 			model.addAttribute("user",hello);
+			if(hello.getId() != this.userDao.getUserByName(authentication.getName()).getId() && !pass) {
+				return "403";
+			}
 		}
 		model.addAttribute("userSession",this.userDao.getUserByName(authentication.getName()));
 		model.addAttribute("bolumAdiandId",this.bolumDao.IdAndBolum());
@@ -51,8 +62,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/userAdd", method = RequestMethod.POST)
-	public String userAdd(@ModelAttribute("user") User u,BindingResult result) {
+	public String userAdd(@Valid @ModelAttribute("user") User u,BindingResult result,Model model) {
 		if(result.hasErrors()) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+			model.addAttribute("userSession",this.userDao.getUserByName(authentication.getName()));		//user validation
+			model.addAttribute("bolumAdiandId",this.bolumDao.IdAndBolum());
 			return "userAdd";
 		}
 		System.out.println(u.getId());
