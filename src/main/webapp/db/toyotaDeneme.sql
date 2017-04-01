@@ -16,29 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `BOLUMS`
+-- Table structure for table `bolums`
 --
 
-DROP TABLE IF EXISTS `BOLUMS`;
+/*DB_DRIVER_CLASS=com.mysql.jdbc.Driver
+DB_URL=jdbc:mysql://localhost:3306/sys
+DB_USERNAME=root
+DB_PASSWORD=mucahid1616*/
+
+
+DROP TABLE IF EXISTS `bolums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BOLUMS` (
+CREATE TABLE `bolums` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bolumAdi` varchar(255) DEFAULT NULL,
-  `bolumMudur` varchar(255) DEFAULT NULL,
+  `bolumAdi` varchar(45) NOT NULL,
+  `bolumMudur` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `BOLUMS` VALUES (1,'TMS-K','Ayla Özdemir'),(2,'TMS-F','Ali Gündogdu');
 --
--- Dumping data for table `BOLUMS`
+-- Dumping data for table `bolums`
 --
 
-/*LOCK TABLES `BOLUMS` WRITE;*/
-/*!40000 ALTER TABLE `BOLUMS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `BOLUMS` ENABLE KEYS */;
-/*UNLOCK TABLES;*/
+LOCK TABLES `bolums` WRITE;
+/*!40000 ALTER TABLE `bolums` DISABLE KEYS */;
+INSERT INTO `bolums` VALUES (1,'TMS-F','Ali Öz'),(2,'TMS-K','Ayla Özdemir');
+/*!40000 ALTER TABLE `bolums` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `travels`
@@ -48,28 +54,30 @@ DROP TABLE IF EXISTS `travels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `travels` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `gidisAmac` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `projeKod` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `seyehatBas` varchar(255) NOT NULL,
-  `seyehatMik` varchar(255) NOT NULL,
-  `seyehatSon` varchar(255) NOT NULL,
-  `seyehatYeri` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gidisAmac` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `projeKod` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `seyehatBas` varchar(45) NOT NULL,
+  `seyehatSon` varchar(45) NOT NULL,
+  `seyehatYeri` varchar(45) CHARACTER SET utf8 NOT NULL,
   `userId` int(11) NOT NULL,
+  `seyehatMik` varchar(45) CHARACTER SET utf8 NOT NULL,
   `validErrorMessage` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  KEY `userId_idx` (`userId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `travels`
 --
 
-/*LOCK TABLES `travels` WRITE;*/
+LOCK TABLES `travels` WRITE;
 /*!40000 ALTER TABLE `travels` DISABLE KEYS */;
-INSERT INTO `travels` VALUES (1,'Project1','A5','03/31/2017','2000$','04/29/2017','USA',1,NULL),(2,'meet-up','666','03/01/2017','2000$','04/08/2017','Ukraine',1,NULL),(3,'Negotiations','666','04/01/2017','2000$','04/21/2017','USA',1,NULL);
+INSERT INTO `travels` VALUES (5,'Project1','D-2','04/19/2017','08/12/2017','Italy',2,'2500£',NULL),(6,'Negotiations','M-6','05/27/2017','05/31/2017','Ukraine',2,'2800$',NULL),(7,'meet-up','K-8','05/04/2017','06/17/2017','France',2,'8000$',NULL);
 /*!40000 ALTER TABLE `travels` ENABLE KEYS */;
-/*UNLOCK TABLES;*/
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -80,26 +88,28 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `authority` varchar(255) NOT NULL,
+  `authority` varchar(45) NOT NULL,
+  `username` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `enabled` int(11) NOT NULL DEFAULT '1',
+  `seyehatGun` varchar(45) DEFAULT NULL,
+  `seyehatZaman` varchar(45) DEFAULT NULL,
   `bolumId` int(11) NOT NULL,
-  `password` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `username` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `enabled` int(11) DEFAULT NULL,
-  `seyehatGun` varchar(255) DEFAULT NULL,
-  `seyehatZaman` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`,`username`),
+  KEY `bolumId_idx` (`bolumId`),
+  CONSTRAINT `bolumId` FOREIGN KEY (`bolumId`) REFERENCES `bolums` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
 --
 
-/*LOCK TABLES `users` WRITE;*/
+LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ROLE_ADMIN',1,'mucahid1616','mucahiderenler',1,NULL,NULL);
+INSERT INTO `users` VALUES (2,'ROLE_ADMIN','mucahiderenler','mucahid1616',1,NULL,NULL,1),(3,'ROLE_USER','user','user',1,'','',1),(4,'ROLE_USER','user2','user2',1,'','',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-/*UNLOCK TABLES;*/
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -110,4 +120,4 @@ INSERT INTO `users` VALUES (1,'ROLE_ADMIN',1,'mucahid1616','mucahiderenler',1,NU
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-31 20:38:21
+-- Dump completed on 2017-04-01 14:41:34

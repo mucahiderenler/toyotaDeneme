@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
-@Table(name="USERS")
+@Table(name="users")
 public class User {
 	@Id
 	@Column(name="id")
@@ -29,7 +29,6 @@ public class User {
 	private String seyehatZaman;
 	private String seyehatGun;
 	private int bolumId;
-	private int enabled;
 	
 	/*@ManyToOne
 	@JoinColumn(name="id", nullable=false , insertable=false, updatable = false)
@@ -110,13 +109,5 @@ public class User {
 	public void setSeyehatGun(String seyehatGun) {
 		this.seyehatGun = seyehatGun;
 	}	
-	
-	public int getEnabled() {
-		return this.enabled;
-	}
-	
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
 	
 }

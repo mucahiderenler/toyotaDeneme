@@ -91,8 +91,7 @@ public class TravelController {
 			}
 			model.addAttribute("bolumList", this.bolumDao.listBolums());
 			model.addAttribute("userSession", this.userDao.getUserByName(authentication.getName()));
-			System.out.println(t.getSeyehatBas());
-			if(t.getSeyehatBas() != null && t.getSeyehatBas() != "" && t.getSeyehatSon() != null &&t.getSeyehatSon() != "") {
+			if(t.getSeyehatBas() != null && t.getSeyehatBas() != "" && t.getSeyehatSon() != null &&t.getSeyehatSon() != "") { //check if date empty
 				
 				Date start = date.stringToDate(t.getSeyehatBas());
 				Date end = date.stringToDate(t.getSeyehatSon());
@@ -100,7 +99,7 @@ public class TravelController {
 				model.addAttribute("travelListDate",betweenDatesList);
 			}
 			else {
-				model.addAttribute("travelList",this.travelService.listTravels());
+				model.addAttribute("travelList",date.last1Year(this.travelService.listTravels()));
 				return "travel";
 			}
 			
