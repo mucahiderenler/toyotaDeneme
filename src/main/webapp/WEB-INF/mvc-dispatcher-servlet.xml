@@ -55,7 +55,7 @@
  
  <mvc:annotation-driven />
  
- <jdbc:initialize-database data-source="dataSource">
+<jdbc:initialize-database data-source="dataSource">
   <jdbc:script location="/db/toyotaDeneme.sql"/>
 </jdbc:initialize-database>
  

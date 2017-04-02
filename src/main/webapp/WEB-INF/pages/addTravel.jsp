@@ -59,7 +59,7 @@
 </ul>
 
 <c:url var="addAction" value="/travels/add" ></c:url>
-<span class="error">${travel.validErrorMessage}</span>
+<span class="error">${validErrorMessage}</span>
 <form:form action="${addAction}" commandName="travel">
 <table>
 

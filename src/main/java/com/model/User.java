@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,9 +19,10 @@ public class User {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	@Size(max = 40, message="username 40 karakteri geçemez.")
 	@NotEmpty(message="username boş olamaz!")
 	private String username;
+	@Size(max = 40, message="şifre 40 karakteri geçemez.")
 	@NotEmpty(message="şifre boş olamaz!")
 	private String password;
 	@NotEmpty(message="rol boş olamaz!")

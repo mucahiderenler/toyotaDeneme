@@ -106,7 +106,7 @@ public class TravelController {
 			return "travel";
 			
 		}	catch(ParseException ex) {
-			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
+			model.addAttribute("validErrorMessage","Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
 			model.addAttribute("userNameList", this.userDao.IdAndUser());
 			return "travel";
 		}
@@ -141,28 +141,38 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value= "/travels/add", method = RequestMethod.POST)
-	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result) {
+	public String updateTravel(@Valid @ModelAttribute("travel") Travel t, BindingResult result,Model model) {
 		try {
-		if(result.hasErrors()){
-			return "addTravel";
-		}
-		
-		if(date.dateValid(date.stringToDate(t.getSeyehatBas()), date.stringToDate(t.getSeyehatSon()))) {
-			t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
-			return "addTravel";
-		}
-		
-		if(t.getId() == 0){
-			//new travel, add it
-			this.travelService.addTravel(t);
-		}else{
-			//existing travel, call update
-			this.travelService.updateTravel(t);
-		}
-		
-		return "redirect:/travels";
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			model.addAttribute("user", this.userDao.getUserByName(authentication.getName()));
+			String auth =  authentication.getAuthorities().toString();
+			boolean pass = (auth.contains("ADMIN"));
+			
+			if(pass){
+				model.addAttribute("userNameList", this.userDao.IdAndUser());
+			}
+			
+			if(result.hasErrors()){
+				return "addTravel";
+			}
+			
+			if(date.dateValid(date.stringToDate(t.getSeyehatBas()), date.stringToDate(t.getSeyehatSon()))) {
+				//t.setValidErrorMessage("Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
+				model.addAttribute("validErrorMessage","Seyehat başlangıcı seyehat sonundan önce olmalıdır.");
+				return "addTravel";
+			}
+			
+			if(t.getId() == 0){
+				//new travel, add it
+				this.travelService.addTravel(t);
+			}else{
+				//existing travel, call update
+				this.travelService.updateTravel(t);
+			}
+			
+			return "redirect:/travels";
 		} catch(ParseException ex) {
-			t.setValidErrorMessage("Tarih degerleri düzgün girilmelidir.");
+			model.addAttribute("validErrorMessage","Tarih değerleri düzgün girilmeli..");
 			return "addTravel";
 		}
 	}

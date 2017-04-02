@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,15 +23,18 @@ public class Travel {
 	private String seyehatBas;
 	@NotEmpty(message="Seyehat sonu girilmelidir.")
 	private String seyehatSon;
+	@Size(max = 40, message="Seyehat yeri 40 karakteri geçemez.")
 	@NotEmpty(message="Seyehat yeri girilmelidir.")
 	private String seyehatYeri;
+	@Size(max = 40, message="Gidiş amacı 40 karakteri geçemez.")
 	@NotEmpty(message="Gidiş amacınızı girilmelidir..")
 	private String gidisAmac;
+	@Size(max = 40, message="Seyehat tuturı 40 karakteri geçemez.")
 	@NotEmpty(message="Seyehat tutarı girilmelidir.")
 	private String seyehatMik;
+	@Size(max = 40, message="Proje Kodu 40 karakteri geçemez.")
 	@NotEmpty(message="Proje kodu girilmelidir.")
 	private String projeKod;
-	private String validErrorMessage;
 	
 	/*@OneToMany(mappedBy="travel1" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<User> user;*/
@@ -118,14 +122,6 @@ public class Travel {
 	
 	public void setProjeKod(String projeKod){
 		this.projeKod = projeKod;
-	}
-	
-	public String getValidErrorMessage() {
-		return this.validErrorMessage;
-	}
-	
-	public void setValidErrorMessage(String msg) {
-		this.validErrorMessage = msg;
 	}
 	
 }
