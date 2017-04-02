@@ -135,7 +135,7 @@
 		
 		<td>
 		
-		<input type="checkbox" id="bilgi" name="bilgi" value="yes" onclick="javascript:houseclean();"/>
+		<input type="checkbox" id="bilgi" name="bilgi"  onclick="javascript:houseclean();"/>
 			<select id="seyehatGun" name="seyehatGun" disabled>
 			  <option value="Pazartesi">Pazartesi</option>
 			  <option value="Salı">Salı</option>

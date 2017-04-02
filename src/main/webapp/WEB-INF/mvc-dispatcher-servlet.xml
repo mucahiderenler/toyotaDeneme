@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
- xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns:tx="http://www.springframework.org/schema/tx"   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
  xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
  <context:component-scan base-package="com.controller" />
 
@@ -24,9 +25,9 @@
 </property>
  
   <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-   <!-- <property name="url" value="jdbc:mysql://localhost:3306/sys?characterEncoding=UTF-8" />-->
-  <property name="url" value="jdbc:mysql://toyotadeneme.c4b7a45ruvq9.us-east-1.rds.amazonaws.com:3306/toyotaDeneme?characterEncoding=UTF-8" />
-  <property name="username" value="mucahiderenler" />
+      <property name="url" value="jdbc:mysql://localhost:3306/toyotaDeneme?createDatabaseIfNotExist=true" />
+  <!--  <property name="url" value="jdbc:mysql://toyotadeneme.c4b7a45ruvq9.us-east-1.rds.amazonaws.com:3306/toyotaDeneme?characterEncoding=UTF-8" />-->
+  <property name="username" value="root" />
   <property name="password" value="mucahid1616" />
  </bean>
   
@@ -54,6 +55,11 @@
  
  <mvc:annotation-driven />
  
+ <jdbc:initialize-database data-source="dataSource">
+  <jdbc:script location="/db/toyotaDeneme.sql"/>
+</jdbc:initialize-database>
+ 
+ 
  <!-- Hibernate 4 SessionFactory Bean definition -->
 	<bean id="hibernate4AnnotatedSessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -68,13 +74,13 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<!--<prop key="hibernate.hbm2ddl.import_files">/db/toyotaDeneme.sql</prop>-->
+				<!--  <prop key="hibernate.hbm2ddl.import_files">/db/toyotaDeneme.sql</prop>-->
 				<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.connection.CharSet">utf8</prop>
 				<prop key="hibernate.connection.useUnicode">true</prop>
 				<prop key="hibernate.connection.characterEncoding">utf8</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 			</props>
 		</property>
 	</bean>

@@ -66,7 +66,7 @@
 					<td>${bolum.bolumAdi}</td>
 		  			<td>${bolum.bolumMudur}</td>
 		  			<td>${user.authority}</td>
-		  			<td>${user.seyehatGun}${user.seyehatZaman}
+		  			<td>${user.seyehatGun}${user.seyehatZaman}</td>
 		  			<td>
 					<a href="<c:url value='/users/remove/${user.id}' />" class="link">
 					<button type="button" class="btn btn-danger">

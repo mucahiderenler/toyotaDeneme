@@ -69,7 +69,9 @@ public class UserController {
 			model.addAttribute("bolumAdiandId",this.bolumDao.IdAndBolum());
 			return "userAdd";
 		}
-		System.out.println(u.getId());
+		u.setSeyehatGun(u.getSeyehatGun().replace(",", "-"));
+		u.setSeyehatZaman(u.getSeyehatZaman().replace(","," "));
+		
 		if(u.getId() == 0) {
 			this.userDao.addUser(u);
 		}

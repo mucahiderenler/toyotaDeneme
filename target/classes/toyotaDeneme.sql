@@ -18,8 +18,7 @@
 --
 -- Table structure for table `bolums`
 --
-DROP TABLE IF EXISTS `travels`;
-DROP TABLE IF EXISTS `users`;
+
 DROP TABLE IF EXISTS `bolums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -41,47 +40,11 @@ INSERT INTO `bolums` VALUES (1,'TMS-F','Ali Öz'),(2,'TMS-K','Ayla Özdemir');
 /*!40000 ALTER TABLE `bolums` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
---
--- Table structure for table `users`
---
-
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `authority` varchar(45) NOT NULL,
-  `username` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `enabled` int(11) NOT NULL DEFAULT '1',
-  `seyehatGun` varchar(45) DEFAULT NULL,
-  `seyehatZaman` varchar(45) DEFAULT NULL,
-  `bolumId` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`username`),
-  KEY `bolumId_idx` (`bolumId`),
-  CONSTRAINT `bolumId` FOREIGN KEY (`bolumId`) REFERENCES `bolums` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'ROLE_ADMIN','mucahiderenler','mucahid1616',1,NULL,NULL,1),(3,'ROLE_USER','user','user',1,'','',1),(4,'ROLE_USER','user2','user2',1,'','',2);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-
 --
 -- Table structure for table `travels`
 --
 
-
+DROP TABLE IF EXISTS `travels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `travels` (
@@ -110,7 +73,38 @@ INSERT INTO `travels` VALUES (5,'Project1','D-2','04/19/2017','08/12/2017','Ital
 /*!40000 ALTER TABLE `travels` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `users`
+--
 
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `authority` varchar(45) NOT NULL,
+  `username` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `enabled` int(11) NOT NULL DEFAULT '1',
+  `seyehatGun` varchar(45) DEFAULT NULL,
+  `seyehatZaman` varchar(45) DEFAULT NULL,
+  `bolumId` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`username`),
+  KEY `bolumId_idx` (`bolumId`),
+  CONSTRAINT `bolumId` FOREIGN KEY (`bolumId`) REFERENCES `bolums` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'ROLE_ADMIN','mucahiderenler','mucahid1616',1,NULL,NULL,1),(3,'ROLE_USER','user','user',1,'','',1),(4,'ROLE_USER','user2','user2',1,'','',2);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
